@@ -194,44 +194,10 @@ WebhookEvent
 
 ---
 
-## 🔐 Security Architecture
 
-### Multi-Layer Defense
 
 ```
-┌─────────────────────────────────────────────┐
-│ 1. EDGE LAYER (Before JavaScript Execution) │
-│    ✓ HSTS (1-year, include subdomains)      │
-│    ✓ CSP (script-src, connect-src limited) │
-│    ✓ X-Frame-Options: DENY                  │
-│    ✓ X-Content-Type-Options: nosniff        │
-│    ✓ JWT Validation at Edge                 │
-└─────────────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────┐
-│ 2. TRANSPORT LAYER                          │
-│    ✓ TLS 1.3+ (enforced)                    │
-│    ✓ Secure, HttpOnly, SameSite=Strict      │
-│    ✓ HTTPS redirects                        │
-└─────────────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────┐
-│ 3. APPLICATION LAYER                        │
-│    ✓ CSRF: Double-submit cookie validation  │
-│    ✓ Rate Limiting: Fingerprint-based IDs   │
-│    ✓ RBAC: Role + ownership checks          │
-│    ✓ Input Validation: Zod at every edge    │
-│    ✓ SQL Injection: Prisma parameterized    │
-│    ✓ IDOR Prevention: Resource ownership    │
-└─────────────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────┐
-│ 4. PAYMENT LAYER                            │
-│    ✓ Webhook Signing: HMAC-SHA256           │
-│    ✓ Idempotency: Event ID deduplication    │
-│    ✓ Timing-Safe Comparison: 200ms+ ops    │
-│    ✓ PCI DSS Compliance: Token-based        │
-└─────────────────────────────────────────────┘
+
 ```
 
 ### Key Implementations
