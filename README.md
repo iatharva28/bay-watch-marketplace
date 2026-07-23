@@ -2,6 +2,8 @@
 
 <div align="center">
 
+![BAY Maison Hero](https://github.com/iatharva28/bay-watch-marketplace/assets/placeholder/bay-hero.png)
+
 **We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment.**
 
 A production-grade, multi-seller luxury watch marketplace built with **Next.js 16**, **Prisma/PostgreSQL**, **NextAuth v4**, and **Razorpay**. Designed for the Indian market with full **GST/TCS compliance**.
@@ -20,16 +22,20 @@ A production-grade, multi-seller luxury watch marketplace built with **Next.js 1
 
 Our curated collections represent the pinnacle of horological craftsmanship:
 
-- **Meridian** — The dress watch, distilled. *₹12,500*
-- **Eclipse** — A flying tourbillon, veiled in mystery. *₹1.85 L*
-- **Aurora** — Twenty-four cities, one glance. *₹18,500*
-- **Vertx** — An instrument, not an accessory. *₹35,000*
-- **Lumen** — Time, made audible. *₹3.95 L*
-- **Tide** — Three hundred meters, no compromises. *₹8,500*
-- **Solstice** — A calendar that remembers the seasons. *₹1.25 L*
-- **Horizon** — Two point eight millimeters of perfection. *₹28,500*
+![Collections Grid](https://github.com/iatharva28/bay-watch-marketplace/assets/placeholder/collections-grid.png)
 
-Each collection features grand complications, sport, ultra-thin, and limited editions.
+| Collection | Description | Price | Type |
+|---|---|---|---|
+| **Meridian** | The dress watch, distilled. 38.5 mm | ₹12,500 | Grand Complications |
+| **Eclipse** | A flying tourbillon, veiled in mystery. 41 mm | ₹1,85,000 | Sport |
+| **Aurora** | Twenty-four cities, one glance. 40 mm | ₹18,500 | Grand Complications |
+| **Vertx** | An instrument, not an accessory. 42 mm | ₹35,000 | Ultra-Thin |
+| **Lumen** | Time, made audible. 40 mm | ₹3,95,000 | Limited Edition |
+| **Tide** | Three hundred meters, no compromises. 42 mm | ₹8,500 | Sport |
+| **Solstice** | A calendar that remembers the seasons. 40 mm | ₹1,25,000 | Grand Complications |
+| **Horizon** | Two point eight millimeters of perfection. 39 mm | ₹28,500 | Ultra-Thin |
+
+Each collection features **grand complications**, **sport**, **ultra-thin**, and **limited editions**.
 
 ---
 
@@ -281,6 +287,8 @@ Proprietary — **BAY Maison**. All rights reserved.
 ---
 
 <div align="center">
+
+![BAY Maison Footer](https://github.com/iatharva28/bay-watch-marketplace/assets/placeholder/bay-footer.png)
 
 ### Built with precision. For the discerning few.
 
