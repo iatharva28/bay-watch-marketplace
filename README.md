@@ -83,40 +83,6 @@ Notification (userId, type, title, body, read, data)
 - **Razorpay** test account (for payments)
 - **Resend** account (for emails) or use `onboarding@resend.dev` (dev only)
 
-### Environment Variables
-
-Create `.env.local` from `.env.example` (or manually):
-
-```bash
-# Database (Neon pooled + direct)
-DATABASE_URL="postgresql://user:pass@ep-xxx.neon.tech/db?sslmode=require"
-DIRECT_URL="postgresql://user:pass@ep-xxx.neon.tech/db?sslmode=require"
-
-# NextAuth
-NEXTAUTH_SECRET="openssl rand -base64 32"
-NEXTAUTH_URL="http://localhost:3000"
-
-# OAuth (optional)
-GOOGLE_CLIENT_ID=""
-GOOGLE_CLIENT_SECRET=""
-
-# Razorpay (test keys from dashboard)
-RAZORPAY_KEY_ID="rzp_test_..."
-RAZORPAY_KEY_SECRET="..."
-RAZORPAY_WEBHOOK_SECRET="whsec_..."  # from Razorpay webhook config
-
-# Resend
-RESEND_API_KEY="re_..."
-EMAIL_FROM="BAY Maison <care@baymaison.in>"
-EMAIL_DOMAIN_VERIFIED="false"  # true in prod with verified domain
-
-# Rate Limiting (optional overrides)
-RATE_LIMIT_REGISTER_MAX=50
-RATE_LIMIT_REGISTER_WINDOW_MS=60000
-RATE_LIMIT_LOGIN_MAX=30
-RATE_LIMIT_CHECKOUT_MAX=20
-```
-
 ### Commands
 
 ```bash
