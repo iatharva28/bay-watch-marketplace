@@ -1,0 +1,588 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =================================================================
+   BAY — Glacier Noir Design System
+   "Quiet Luxury. Timeless Precision."
+   No gold. No warm tones. Only cool platinum, deep obsidian, and
+   editorial whitespace — the visual language of a Swiss maison
+   observed under moonlight on a glacier.
+   ================================================================= */
+
+@theme inline {
+  /* shadcn bridge */
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-card: var(--surface-2);
+  --color-card-foreground: var(--text);
+  --color-popover: var(--surface-3);
+  --color-popover-foreground: var(--text);
+  --color-primary: var(--text);
+  --color-primary-foreground: var(--bg);
+  --color-secondary: var(--surface-2);
+  --color-secondary-foreground: var(--text);
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--text-muted);
+  --color-accent: var(--platinum);
+  --color-accent-foreground: var(--bg);
+  --color-destructive: oklch(0.65 0.18 25);
+  --color-border: var(--hairline);
+  --color-input: var(--hairline);
+  --color-ring: var(--platinum);
+  --color-sidebar: var(--surface-1);
+  --color-sidebar-foreground: var(--text);
+  --color-sidebar-primary: var(--text);
+  --color-sidebar-primary-foreground: var(--bg);
+  --color-sidebar-accent: var(--surface-2);
+  --color-sidebar-accent-foreground: var(--text);
+  --color-sidebar-border: var(--hairline);
+  --color-sidebar-ring: var(--platinum);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 10px;
+}
+
+:root {
+  /* ---- Glacier Noir palette ---- */
+  --bg: #08090B;              /* obsidian black, like museum after-hours */
+  --bg-soft: #0C0D10;         /* barely-lit vault */
+  --surface-1: #0F1014;       /* charcoal panel */
+  --surface-2: #14161B;       /* elevated card */
+  --surface-3: #1B1E25;       /* hovered card */
+  --surface-4: #232730;       /* active card */
+
+  --text: #F2F2EF;            /* pearl white */
+  --text-soft: #C9CACF;       /* secondary copy */
+  --text-muted: #6E7178;      /* tertiary copy */
+  --text-faint: #3F4248;      /* disabled / labels */
+
+  --platinum: #C8CCD3;        /* brushed silver — primary accent (no gold) */
+  --platinum-dim: #8C9098;    /* dimmed platinum */
+  --platinum-bright: #E8EAEE; /* bright platinum for highlights */
+
+  --slate-deep: #2E4051;      /* deep slate blue — sophisticated depth */
+  --steel: #6B8E9B;           /* soft steel — interactive states */
+  --ice: #A8BCC7;             /* ice — soft cool accent */
+
+  --hairline: rgba(255, 255, 255, 0.07);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+  --glass: rgba(255, 255, 255, 0.025);
+  --glass-strong: rgba(255, 255, 255, 0.05);
+
+  /* Shadows — cool, not warm */
+  --shadow-soft: 0 1px 2px rgba(0,0,0,0.4), 0 8px 30px rgba(0,0,0,0.25);
+  --shadow-elevated: 0 30px 80px -20px rgba(0,0,0,0.7), 0 8px 20px -5px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 80px rgba(200, 204, 211, 0.06);
+
+  /* Motion */
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-precise: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-emphasis: cubic-bezier(0.87, 0, 0.13, 1);
+
+  /* Typography scale */
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* =================================================================
+   Glacier Day — Light theme
+   The same maison, observed under daylight on fresh snow.
+   Warm ivory background, charcoal text, steel accent. Still no
+   gold. Still cool. Activated via `.light` class on <html>.
+   ================================================================= */
+.light {
+  --bg: #F5F3EE;              /* warm ivory — museum gallery walls */
+  --bg-soft: #EDEAE3;         /* soft parchment */
+  --surface-1: #FFFFFF;       /* clean white panel */
+  --surface-2: #F9F7F2;       /* elevated card */
+  --surface-3: #EFECE5;       /* hovered card */
+  --surface-4: #E3DFD7;       /* active card */
+
+  --text: #1A1B1F;            /* charcoal — not pure black */
+  --text-soft: #4A4D54;       /* secondary copy */
+  --text-muted: #6E7178;      /* tertiary copy */
+  --text-faint: #A8ABB0;      /* disabled / labels */
+
+  --platinum: #5A5D63;        /* darker steel — visible on ivory */
+  --platinum-dim: #8C9098;    /* dimmed steel */
+  --platinum-bright: #2E3036; /* dark platinum for emphasis */
+
+  --slate-deep: #2E4051;      /* same deep slate — works on both */
+  --steel: #4A6B78;           /* slightly darker steel for contrast */
+  --ice: #6B8E9B;             /* ice — visible on light */
+
+  --hairline: rgba(0, 0, 0, 0.08);
+  --hairline-strong: rgba(0, 0, 0, 0.16);
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-strong: rgba(255, 255, 255, 0.8);
+
+  --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.06);
+  --shadow-elevated: 0 30px 80px -20px rgba(0,0,0,0.12), 0 8px 20px -5px rgba(0,0,0,0.08);
+  --shadow-glow: 0 0 80px rgba(90, 93, 99, 0.08);
+}
+
+/* =================================================================
+   Base
+   ================================================================= */
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11", "kern";
+  overflow-x: hidden;
+  /* Subtle film grain / noise via gradient for editorial feel.
+     Uses CSS vars so the wash adapts to the active theme. */
+  background-image:
+    radial-gradient(ellipse at 20% 0%, var(--aurora-1, rgba(46, 64, 81, 0.18)) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 100%, var(--aurora-2, rgba(107, 142, 155, 0.08)) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Light theme washes — softer, warmer */
+.light body {
+  --aurora-1: rgba(46, 64, 81, 0.06);
+  --aurora-2: rgba(107, 142, 155, 0.04);
+}
+
+::selection {
+  background: var(--platinum);
+  color: var(--bg);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--platinum-dim); }
+
+/* =================================================================
+   Typography utilities — editorial luxury scale
+   ================================================================= */
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.eyebrow-platinum {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--platinum);
+}
+
+.display-1 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+}
+
+.display-2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.display-3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  line-height: 1.03;
+  letter-spacing: -0.015em;
+}
+
+.italic-serif {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+  font-weight: 300;
+  letter-spacing: 0.005em;
+}
+
+.body-md {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  font-weight: 400;
+}
+
+.spec-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* Text balance for editorial copy */
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* =================================================================
+   Surfaces & containers
+   ================================================================= */
+.surface {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}
+
+.surface-elevated {
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-soft);
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid var(--hairline);
+}
+
+.hairline-t { border-top: 1px solid var(--hairline); }
+.hairline-b { border-bottom: 1px solid var(--hairline); }
+.hairline-l { border-left: 1px solid var(--hairline); }
+.hairline-r { border-right: 1px solid var(--hairline); }
+
+/* =================================================================
+   BAY signature components
+   ================================================================= */
+
+/* Magnetic button */
+.btn-bay {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.6s var(--ease-lux), border-color 0.6s var(--ease-lux);
+}
+.btn-bay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--platinum);
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-lux);
+  z-index: 0;
+}
+.btn-bay > * { position: relative; z-index: 1; }
+.btn-bay:hover { color: var(--bg); border-color: var(--platinum); }
+.btn-bay:hover::before { transform: translateY(0); }
+
+.btn-bay-solid {
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+}
+.btn-bay-solid::before { background: var(--platinum); }
+.btn-bay-solid:hover { color: var(--bg); border-color: var(--platinum); }
+
+/* Underline link */
+.link-bay {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+.link-bay::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--platinum);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s var(--ease-lux);
+}
+.link-bay:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.link-bay svg {
+  transition: transform 0.4s var(--ease-lux);
+}
+.link-bay:hover svg {
+  transform: translateX(4px);
+}
+
+/* Watch card */
+.watch-card {
+  position: relative;
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  transition: border-color 0.5s var(--ease-lux), transform 0.6s var(--ease-lux);
+}
+.watch-card:hover {
+  border-color: var(--hairline-strong);
+}
+.watch-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(200, 204, 211, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-lux);
+  pointer-events: none;
+}
+.watch-card:hover::after { opacity: 1; }
+
+/* Numbered marker for sections */
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+}
+
+/* Vertical text */
+.text-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Marquee */
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Watch "tick" pulse — used as a subtle accent on key elements */
+@keyframes watch-tick {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+}
+.tick-pulse { animation: watch-tick 4s ease-in-out infinite; }
+
+/* Slow rotation for ambient elements */
+@keyframes slow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.slow-rotate { animation: slow-rotate 60s linear infinite; }
+
+/* Reveal — used by IntersectionObserver / GSAP */
+.reveal-line {
+  overflow: hidden;
+  display: block;
+}
+.reveal-line > * {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1s var(--ease-lux);
+}
+.reveal-line.is-visible > * { transform: translateY(0); }
+
+/* Loading shimmer for watch silhouettes */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, var(--surface-1) 0%, var(--surface-3) 50%, var(--surface-1) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* Hide default cursor when custom cursor active */
+.cursor-none, .cursor-none * { cursor: none !important; }
+
+/* Custom cursor */
+.bay-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: var(--platinum);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: scale 0.3s var(--ease-lux), background 0.3s var(--ease-lux);
+  mix-blend-mode: difference;
+}
+.bay-cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: scale 0.4s var(--ease-lux), border-color 0.4s var(--ease-lux);
+}
+.bay-cursor.is-hover { scale: 0.5; }
+.bay-cursor-ring.is-hover { scale: 1.78; border-color: var(--platinum); }
+
+@media (hover: none) {
+  .bay-cursor, .bay-cursor-ring { display: none; }
+}
+
+/* Section dividers — thin graduated line */
+.divider-grad {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hairline-strong) 50%, transparent);
+}
+
+/* Grid line aesthetic */
+.grid-lines {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px);
+  background-size: 25% 100%;
+}
+
+/* Watch dial hand — used in loading screen */
+@keyframes hand-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* WatchCard delight moments — second hand speeds up on hover,
+   crown rotates slightly, tourbillon cage accelerates.
+   These are the small "alive" touches that make the watches
+   feel mechanical, not illustrated. */
+.watch-card:hover .watch-second-hand {
+  animation-duration: 8s !important;
+}
+.watch-card:hover .watch-crown {
+  transform: rotate(45deg);
+}
+.watch-card:hover .watch-tourbillon-cage {
+  animation-duration: 2s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watch-second-hand,
+  .watch-tourbillon-cage {
+    animation: none !important;
+  }
+  .watch-crown {
+    transition: none !important;
+  }
+}
+
+/* Smooth fade for image-like elements */
+.fade-in-image {
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-lux);
+}
+.fade-in-image.is-loaded { opacity: 1; }
+
+/* Aurora wash background — uses CSS vars for theme adaptation */
+.aurora-wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, var(--aurora-wash-1, rgba(46, 64, 81, 0.35)) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, var(--aurora-wash-2, rgba(107, 142, 155, 0.12)) 0%, transparent 60%);
+}
+
+/* Light theme — softer aurora washes */
+.light .aurora-wash {
+  --aurora-wash-1: rgba(46, 64, 81, 0.08);
+  --aurora-wash-2: rgba(107, 142, 155, 0.05);
+}
+
+/* Focus-visible — global ring for keyboard users (WCAG 2.4.7 / 1.4.11) */
+:focus-visible {
+  outline: 2px solid var(--platinum);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Buttons and links get a tighter offset so the ring sits close to the label */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Form controls use the same platinum ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--platinum);
+  outline-offset: 2px;
+}
+
+/* Remove default outline only when focus-visible is supported */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion — kill durations AND pause autonomous rAF-driven motion.
+   The rAF loops in Watch3D and CustomCursor read this via matchMedia
+   and return early, so the canvas stays still. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track { animation: none; }
+  .slow-rotate { animation: none; }
+  .shimmer { animation: none; }
+}
