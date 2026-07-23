@@ -2,6 +2,8 @@
 
 <div align="center">
 
+![BAY Maison Hero](https://github.com/iatharva28/bay-watch-marketplace/assets/153049629/bay-maison-hero.png)
+
 **We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment.**
 
 A production-grade, multi-seller luxury watch marketplace built with **Next.js 16**, **Prisma/PostgreSQL**, **NextAuth v4**, and **Razorpay**. Designed for the Indian market with full **GST/TCS compliance**.
@@ -19,6 +21,8 @@ A production-grade, multi-seller luxury watch marketplace built with **Next.js 1
 ## ✨ Collections Showcase
 
 Our curated collections represent the pinnacle of horological craftsmanship:
+
+![Collections Grid](https://github.com/iatharva28/bay-watch-marketplace/assets/153049629/collections-showcase.png)
 
 | Collection | Description | Price | Type |
 |---|---|---|---|
@@ -283,6 +287,8 @@ Proprietary — **BAY Maison**. All rights reserved.
 ---
 
 <div align="center">
+
+![BAY Maison Footer](https://github.com/iatharva28/bay-watch-marketplace/assets/153049629/bay-maison-footer.png)
 
 ### Built with precision. For the discerning few.
 
