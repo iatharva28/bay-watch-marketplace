@@ -1,6 +1,18 @@
 # BAY Maison
 
-A production-grade, multi-seller luxury watch marketplace built with Next.js 16 (App Router), Prisma/PostgreSQL, NextAuth v4, and Razorpay. Designed for the Indian market with full GST/TCS compliance, multi-seller order splitting, atomic stock decrements, and defense-in-depth security.
+![BAY - Quiet Luxury. Timeless Precision.](https://images.unsplash.com/image1.jpg?alt=BAY%20Maison%20Hero)
+
+A production-grade, multi-seller luxury watch marketplace built with Next.js 16 (App Router), Prisma/PostgreSQL, NextAuth v4, and Razorpay. Designed for the Indian market with full GST/TCS compliance.
+
+> **"We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment."**
+
+---
+
+## ✨ Collections Showcase
+
+![BAY Collections - Meridian, Eclipse, Aurora, Vertx](https://images.unsplash.com/image2.jpg?alt=Watch%20Collections)
+
+*Curated timepieces: from the dress watch to grand complications.*
 
 ---
 
@@ -28,7 +40,7 @@ A production-grade, multi-seller luxury watch marketplace built with Next.js 16 
 | **Prisma Singleton** | `src/lib/db.ts` caches `PrismaClient` on `globalThis` to prevent connection pool exhaustion on serverless (Neon) |
 | **Multi-Seller Order Splitting** | Single cart → grouped by `sellerId` → one `Order` per seller sharing a single `razorpayOrderId`; suffix `A/B/C` on `orderNumber` |
 | **Atomic Stock Decrement** | `UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?` inside a Prisma transaction; rolls back on race condition |
-| **Shared Settlement Engine** | `src/lib/bay/settlement.ts` — single source of truth for GST extraction, TCS allocation, commission, gateway fees, seller payouts; reused by `/api/checkout/verify` and `/api/webhooks/razorpay` |
+| **Shared Settlement Engine** | `src/lib/bay/settlement.ts` — single source of truth for GST extraction, TCS allocation, commission, gateway fees, seller payouts; reused by `/api/checkout/verify` |
 | **Idempotent Webhooks** | `WebhookEvent` table stores `eventId`; duplicate Razorpay retries are acknowledged and skipped |
 | **Edge Auth Proxy** | `src/proxy.ts` runs at the edge, verifies NextAuth JWT, applies CSP/HSTS headers before page render |
 
@@ -144,6 +156,14 @@ curl https://your-domain.vercel.app/api/health
 
 ---
 
+## Platform UI & Footer
+
+![BAY Maison Footer - Navigation, Account, Seller Portal](https://images.unsplash.com/image3.jpg?alt=BAY%20Platform%20Footer)
+
+*Seamless navigation across shop, seller portal, and admin dashboard.*
+
+---
+
 ## AI-Assisted Engineering Workflow
 
 This project was built using **advanced AI-assisted development** as a force-multiplier for a solo engineer:
@@ -157,7 +177,7 @@ This project was built using **advanced AI-assisted development** as a force-mul
   - **Debugging**: Real-time log analysis, stack trace interpretation, race condition identification (stock decrement), Prisma connection pooling fixes
   - **Skill Authoring**: Reusable Hermes skills created for recurring patterns (Next.js debugging, Prisma patterns, Razorpay integration, security hardening)
 
-This approach compresses what would typically require a 3–4 person team (backend, frontend, DevOps, security) into a single engineer with AI amplification — without sacrificing code quality, observability, or production readiness.
+This approach compresses what would typically require a 3–4 person team (backend, frontend, DevOps, security) into a single engineer with AI amplification — without sacrificing code quality, observability, or security posture.
 
 ---
 
