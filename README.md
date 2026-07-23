@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![BAY - Quiet Luxury. Timeless Precision.](https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=1200&h=400&fit=crop&q=80)
-
 **We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment.**
 
 A production-grade, multi-seller luxury watch marketplace built with **Next.js 16**, **Prisma/PostgreSQL**, **NextAuth v4**, and **Razorpay**. Designed for the Indian market with full **GST/TCS compliance**.
@@ -20,14 +18,18 @@ A production-grade, multi-seller luxury watch marketplace built with **Next.js 1
 
 ## ✨ Collections Showcase
 
-<div align="center">
+Our curated collections represent the pinnacle of horological craftsmanship:
 
-![BAY Collections - Curated Timepieces](https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=1200&h=400&fit=crop&q=80)
+- **Meridian** — The dress watch, distilled. *₹12,500*
+- **Eclipse** — A flying tourbillon, veiled in mystery. *₹1.85 L*
+- **Aurora** — Twenty-four cities, one glance. *₹18,500*
+- **Vertx** — An instrument, not an accessory. *₹35,000*
+- **Lumen** — Time, made audible. *₹3.95 L*
+- **Tide** — Three hundred meters, no compromises. *₹8,500*
+- **Solstice** — A calendar that remembers the seasons. *₹1.25 L*
+- **Horizon** — Two point eight millimeters of perfection. *₹28,500*
 
-*Meridian · Eclipse · Aurora · Vertx*
-*From dress watches to grand complications*
-
-</div>
+Each collection features grand complications, sport, ultra-thin, and limited editions.
 
 ---
 
@@ -282,6 +284,7 @@ Proprietary — **BAY Maison**. All rights reserved.
 
 ### Built with precision. For the discerning few.
 
-![Footer](https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&h=300&fit=crop&q=80)
+**Maison Horlogère — Founded 1947**  
+*Mumbai, India*
 
 </div>
