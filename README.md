@@ -119,8 +119,42 @@ A production-grade, multi-seller luxury watch marketplace engineering the inters
 
 ### Overview
 
-BAY Maison employs **Hermes Agent** as the central orchestrator for coordinating complex, multi-step workflows across critical business operations. Rather than isolated agents, Hermes provides deterministic workflow orchestration that ensures compliance, auditability, and reliable automation.
+BAY Maison employs **Hermes Agent** as the central orchestrator for coordinating complex, multi-step workflows across critical business operations. Rather than isolated agents, Hermes provides deterministic, auditable workflow execution with built-in idempotency and fault tolerance.
 
+### Key Workflows
+
+**Settlement Workflow** (Payment → Settlement → Payout)
+- Triggered on: `payment.captured` webhook
+- Atomically splits revenue across sellers
+- Calculates GST, TCS, platform commission
+- Generates seller payout batches
+- Immutable audit trail
+
+**Dispute & Refund Workflow** (Chargeback → Investigation → Resolution)
+- Tracks chargeback cases from processor
+- Escalates per SLA
+- Executes refunds with settlement reversal
+- Notifies both customer and seller
+
+**Inventory Workflow** (Stock Sync → Depletion → Replenishment Alert)
+- Watches concurrent checkout collisions
+- Executes atomic decrements
+- Triggers alerts when stock < threshold
+- Prevents overselling via transactional guards
+
+**Notification Workflow** (Event → Template → Dispatch)
+- Consumes order, payout, dispute events
+- Renders personalized emails via Resend
+- Tracks delivery + opens for analytics
+- Retry logic for failed deliveries
+
+### Idempotency & Fault Tolerance
+
+All Hermes workflows are idempotent:
+- Each workflow execution has a unique `executionId`
+- Failed steps are retried with exponential backoff
+- On failure, state rollback is atomic
+- Audit logs are immutable and queryable
 
 ---
 
@@ -353,13 +387,13 @@ Hermes retries with same `executionId` → upsert ensures exactly-once workflow 
 
 ## 🤝 Collaborators & Credits
 
-**Architected & Engineered by**: @iatharva28
+**Architected & Engineered by**: [@iatharva28](https://github.com/iatharva28)
 
-**AI-Assisted Development**: Leveraging advanced LLMs (GLM-5.2 for reasoning, GPT-4o for generation) paired with systematic code review and security auditing to achieve senior-level output velocity.
+**AI-Assisted Development**: Leveraging advanced LLMs (Claude for reasoning, GPT-4o for generation) paired with systematic code review and security auditing to achieve senior-level output velocity without sacrificing code quality or maintainability.
 
-**Workflow Orchestration**: Powered by **Hermes Agent** as the central orchestrator for deterministic, auditable coordination of settlement, disputes, inventory, and customer notification workflows.
+**Workflow Orchestration**: Powered by **Hermes Agent** as the central orchestrator for deterministic, auditable coordination of settlement, disputes, inventory, and customer notification workflows with built-in fault tolerance and retry semantics.
 
-**Force Multiplier Impact**: 3–4 person team (backend, frontend, DevOps, security) compressed into 1 engineer + AI + Hermes Orchestrator, delivering production-grade infrastructure, comprehensive API surface, and defense-in-depth security.
+**Force Multiplier Impact**: 3–4 person team effort (backend, frontend, DevOps, security) compressed into 1 engineer + AI augmentation + Hermes Orchestrator, delivering production-grade infrastructure, comprehensive test coverage, and enterprise-ready operations.
 
 ---
 
@@ -373,6 +407,69 @@ Hermes retries with same `executionId` → upsert ensures exactly-once workflow 
 ✅ **Data Privacy** — Secure cookies, httpOnly flags, session expiry
 ✅ **Audit Trail** — Immutable workflow execution logs with full idempotency for compliance
 ✅ **Dispute Resolution** — Automated chargeback handling with escalation (Hermes Orchestrator)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 20+ or Bun 1.x
+- PostgreSQL 16+
+- Razorpay account (production keys)
+- Resend account (email delivery)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/iatharva28/bay-watch-marketplace.git
+cd bay-watch-marketplace
+
+# Install dependencies
+npm install
+# or
+bun install
+
+# Setup environment variables
+cp .env.example .env.local
+
+# Run database migrations
+npm run db:migrate
+# or
+bun run db:migrate
+
+# Seed the database
+npm run db:seed
+# or
+bun run db:seed
+
+# Start development server
+npm run dev
+# or
+bun run dev
+```
+
+### Environment Variables
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@host:port/db
+
+# Authentication
+NEXTAUTH_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+
+# Payments
+RAZORPAY_KEY_ID=your-key-id
+RAZORPAY_KEY_SECRET=your-key-secret
+
+# Email
+RESEND_API_KEY=your-resend-key
+
+# Hermes Orchestrator
+HERMES_API_KEY=your-hermes-key
+HERMES_WORKSPACE_ID=your-workspace-id
+```
 
 ---
 
