@@ -1,70 +1,85 @@
-# BAY Maison
+# 🕐 BAY Maison
 
-![BAY - Quiet Luxury. Timeless Precision.](https://images.unsplash.com/image1.jpg?alt=BAY%20Maison%20Hero)
+<div align="center">
 
-A production-grade, multi-seller luxury watch marketplace built with Next.js 16 (App Router), Prisma/PostgreSQL, NextAuth v4, and Razorpay. Designed for the Indian market with full GST/TCS compliance.
+![BAY - Quiet Luxury. Timeless Precision.](https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=1200&h=400&fit=crop&q=80)
 
-> **"We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment."**
+**We do not compete through loud marketing — only through craftsmanship, mechanical excellence, and design that outlives the moment.**
+
+A production-grade, multi-seller luxury watch marketplace built with **Next.js 16**, **Prisma/PostgreSQL**, **NextAuth v4**, and **Razorpay**. Designed for the Indian market with full **GST/TCS compliance**.
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org)
+[![Prisma](https://img.shields.io/badge/Prisma-6.19-2D3748?logo=prisma)](https://www.prisma.io)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://www.postgresql.org)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](LICENSE)
+
+</div>
 
 ---
 
 ## ✨ Collections Showcase
 
-![BAY Collections - Meridian, Eclipse, Aurora, Vertx](https://images.unsplash.com/image2.jpg?alt=Watch%20Collections)
+<div align="center">
 
-*Curated timepieces: from the dress watch to grand complications.*
+![BAY Collections - Curated Timepieces](https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=1200&h=400&fit=crop&q=80)
+
+*Meridian · Eclipse · Aurora · Vertx*
+*From dress watches to grand complications*
+
+</div>
 
 ---
 
-## Architecture & Tech Stack
+## 🏗️ Architecture & Tech Stack
 
 | Layer | Technology | Version | Purpose |
 |-------|------------|---------|---------|
 | **Framework** | Next.js (App Router) | 16.1.x | React Server Components, Server Actions, Edge middleware |
-| **Runtime** | Bun (dev) / Node.js (prod) | 1.x / 20+ | Development with hot-reload; production standalone output |
-| **Database** | PostgreSQL (Neon Serverless) | 16+ | Primary data store; pooled connections via `DATABASE_URL` (port 6543) |
-| **ORM** | Prisma Client | 6.19.x | Type-safe database access; singleton pattern for serverless |
-| **Auth** | NextAuth.js (Credentials + Google) | 4.24.x | JWT sessions, httpOnly cookies, role-based access (customer/seller/admin) |
-| **Payments** | Razorpay | 2.9.x | UPI, cards, net banking, EMI; webhook idempotency + HMAC-SHA256 verification |
-| **Email** | Resend (React Email) | 6.17.x | Transactional emails (order confirmations, payouts) |
-| **Validation** | Zod | 4.x | Runtime schema validation on every API boundary |
-| **State** | Zustand + TanStack Query | 5.x / 5.82.x | Client state + server cache synchronization |
-| **UI** | Radix UI + Tailwind CSS 4 | Latest | Unstyled accessible primitives; utility-first styling |
-| **Rate Limiting** | In-memory (dev) / Redis-ready (prod) | Custom | Env-driven limits; fingerprint-based client ID; survives hot reloads |
-| **Security** | CSRF (double-submit), CSP, HSTS, timing-safe HMAC | Custom + Next.js | Edge middleware + per-route verification |
+| **Runtime** | Bun / Node.js | 1.x / 20+ | Dev: hot-reload; Prod: standalone output |
+| **Database** | PostgreSQL (Neon Serverless) | 16+ | Pooled connections via `DATABASE_URL` (port 6543) |
+| **ORM** | Prisma Client | 6.19.x | Type-safe access; singleton for serverless |
+| **Auth** | NextAuth.js | 4.24.x | JWT, httpOnly cookies, RBAC (customer/seller/admin) |
+| **Payments** | Razorpay | 2.9.x | UPI, cards, net banking, EMI; HMAC-SHA256 verification |
+| **Email** | Resend + React Email | 6.17.x | Transactional emails (orders, payouts) |
+| **Validation** | Zod | 4.x | Runtime schema validation at every API boundary |
+| **State** | Zustand + TanStack Query | 5.x / 5.82.x | Client state + server cache sync |
+| **UI** | Radix UI + Tailwind CSS 4 | Latest | Accessible primitives + utility styling |
+| **Rate Limiting** | Custom (Redis-ready) | — | Env-driven, fingerprint-based client ID |
+| **Security** | CSRF, CSP, HSTS | Custom + Next.js | Edge middleware + per-route verification |
 
-### Key Architectural Patterns
+### 🔐 Key Architectural Patterns
 
 | Pattern | Implementation |
 |---------|----------------|
-| **Prisma Singleton** | `src/lib/db.ts` caches `PrismaClient` on `globalThis` to prevent connection pool exhaustion on serverless (Neon) |
-| **Multi-Seller Order Splitting** | Single cart → grouped by `sellerId` → one `Order` per seller sharing a single `razorpayOrderId`; suffix `A/B/C` on `orderNumber` |
-| **Atomic Stock Decrement** | `UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?` inside a Prisma transaction; rolls back on race condition |
-| **Shared Settlement Engine** | `src/lib/bay/settlement.ts` — single source of truth for GST extraction, TCS allocation, commission, gateway fees, seller payouts; reused by `/api/checkout/verify` |
-| **Idempotent Webhooks** | `WebhookEvent` table stores `eventId`; duplicate Razorpay retries are acknowledged and skipped |
-| **Edge Auth Proxy** | `src/proxy.ts` runs at the edge, verifies NextAuth JWT, applies CSP/HSTS headers before page render |
+| **Prisma Singleton** | `src/lib/db.ts` caches `PrismaClient` on `globalThis` — prevents connection pool exhaustion on serverless |
+| **Multi-Seller Order Splitting** | Single cart → grouped by `sellerId` → one `Order` per seller with shared `razorpayOrderId` + `A/B/C` suffix |
+| **Atomic Stock Decrement** | `UPDATE ... WHERE stock >= ?` inside transaction; rolls back on race condition |
+| **Settlement Engine** | `src/lib/bay/settlement.ts` — single source of truth: GST, TCS, commission, gateway fees, payouts |
+| **Idempotent Webhooks** | `WebhookEvent` table stores `eventId` — duplicate Razorpay retries are skipped |
+| **Edge Auth Proxy** | `src/proxy.ts` verifies JWT at edge, applies CSP/HSTS before render |
 
 ---
 
-## Database Schema (Prisma)
+## 📊 Database Schema (Prisma)
 
-Key models (see `prisma/schema.prisma` for full definitions):
+Key models (full definitions in `prisma/schema.prisma`):
 
 ```
 User (customer | seller | admin)
-  └─ Seller (companyName, slug, type: own_brand|authorized|vendor, kycStatus, commissionRate, gstin)
+  └─ Seller (companyName, slug, type, kycStatus, commissionRate, gstin)
   └─ Address[]
   └─ Cart → CartItem[]
   └─ Order[]
   └─ WishlistItem[]
 
-Order (orderNumber, status, paymentStatus, subtotal, gst, tcs, shipping, total, commission, gatewayFee, sellerPayout, razorpayOrderId, razorpayPaymentId)
-  └─ OrderItem[] (productId, name, ref, priceInr, quantity, sellerId, sellerName, commissionRate, itemSubtotal, itemCommission, itemGatewayFee, itemTcs, itemSellerPayout)
+Order (orderNumber, status, paymentStatus, subtotal, gst, tcs, shipping, total, razorpayOrderId, razorpayPaymentId)
+  └─ OrderItem[] (productId, name, priceInr, quantity, sellerId, commissionRate, itemSubtotal, itemGst, itemTcs, itemSellerPayout)
 
 Product (slug, ref, name, priceInr, stock, status, sellerId, categoryId, complicationType, caseFinish, warrantyMonths, shipsInDays)
   └─ Seller
 
-WebhookEvent (eventId @unique, eventType, payload)  -- idempotency store
+WebhookEvent (eventId @unique, eventType, payload)
 Notification (userId, type, title, body, read, data)
 ```
 
@@ -72,72 +87,91 @@ Notification (userId, type, title, body, read, data)
 
 ---
 
-## API Routes
+## 🔌 API Routes
 
 | Route | Method | Auth | Purpose |
 |-------|--------|------|---------|
-| `/api/auth/register` | POST | Public (rate-limited) | Create user (+ seller profile if role=seller) |
+| `/api/auth/register` | POST | Public (rate-limited) | Create user + seller profile |
 | `/api/auth/[...nextauth]` | GET/POST | — | NextAuth handlers (credentials, Google) |
-| `/api/cart` | GET/POST/DELETE | Customer | View/add/remove cart items (price snapshot at add) |
-| `/api/checkout` | POST | Customer (rate-limited) | Validate cart, group by seller, calculate settlement, create Orders, create Razorpay Order |
-| `/api/checkout/verify` | POST | Customer | Verify Razorpay signature, atomic stock decrement, finalize orders, clear cart, send email |
-| `/api/webhooks/razorpay` | POST | Signature-verified | Idempotent handling of `payment.captured`, `payment.failed`, `refund.processed` |
+| `/api/cart` | GET/POST/DELETE | Customer | Cart CRUD (price snapshot at add) |
+| `/api/checkout` | POST | Customer (rate-limited) | Validate, group by seller, calculate settlement, create Razorpay Order |
+| `/api/checkout/verify` | POST | Customer | Verify signature, atomic stock ↓, finalize orders, email |
+| `/api/webhooks/razorpay` | POST | Signature-verified | Handle `payment.captured`, `payment.failed`, `refund.processed` |
 | `/api/seller/*` | Various | Seller | Dashboard, products, orders, payouts |
 | `/api/admin/*` | Various | Admin | User/seller management, analytics, payouts |
 
 ---
 
-## Local Development Setup
+## 🚀 Local Development Setup
 
 ### Prerequisites
-- **Bun** ≥ 1.1 (or Node.js 20+ with npm)
-- **PostgreSQL** (local or Neon cloud)
-- **Razorpay** test account (for payments)
-- **Resend** account (for emails) or use `onboarding@resend.dev` (dev only)
+```bash
+✓ Bun ≥ 1.1 (or Node.js 20+ with npm)
+✓ PostgreSQL (local or Neon cloud)
+✓ Razorpay test account (payments)
+✓ Resend account (emails) or onboarding@resend.dev (dev)
+```
 
-### Commands
+### Quick Start
 
 ```bash
-# Install deps
-bun install          # or npm install
+# 1. Install dependencies
+bun install
 
-# Database
-bun run db:generate  # Prisma generate
-bun run db:push      # Push schema (dev)
-bun run db:migrate   # Create migration
-bun run db:seed      # Seed sellers, products, categories
-bun run db:studio    # Prisma Studio
+# 2. Setup database
+bun run db:generate    # Prisma codegen
+bun run db:push        # Apply schema
+bun run db:seed        # Seed sellers, products
 
-# Dev server (port 3000, logs to dev.log)
-bun run dev
+# 3. Start dev server
+bun run dev            # http://localhost:3000
 
-# Production build (standalone output)
-bun run build
+# 4. Database studio (optional)
+bun run db:studio
+```
 
-# Lint
-bun run lint
+### Available Commands
+
+```bash
+bun run dev            # Dev server (port 3000, logs to dev.log)
+bun run build          # Production build (.next/standalone)
+bun run lint           # ESLint
+bun run db:migrate     # Create migration
+bun run db:push        # Push schema (dev)
+bun run db:generate    # Prisma codegen
+bun run db:seed        # Seed database
 ```
 
 ---
 
-## Deployment (Vercel)
+## 🌐 Deployment (Vercel)
 
 ### Pre-deployment Checklist
 
-- [ ] **Environment Variables** configured in Vercel project settings:
-  - `DATABASE_URL` (Neon pooled, port 6543)
-  - `DIRECT_URL` (Neon direct, port 5432) — required for `prisma migrate deploy`
-  - `NEXTAUTH_SECRET` (strong random string)
-  - `NEXTAUTH_URL` (your production domain, e.g. `https://baymaison.in`)
-  - `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` (live keys)
-  - `RAZORPAY_WEBHOOK_SECRET` (from Razorpay dashboard → Webhooks)
-  - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_DOMAIN_VERIFIED=true`
-  - `RATE_LIMIT_*_MAX` / `RATE_LIMIT_*_WINDOW_MS` (production values)
-- [ ] **Build Command**: `bun run build` (outputs `.next/standalone/`)
-- [ ] **Output Directory**: `.next/standalone` (configured via `next.config.ts` `output: "standalone"`)
-- [ ] **Database Migration**: Run `bun run db:migrate deploy` in CI or via Vercel `build` hook
-- [ ] **Razorpay Webhook URL**: `https://your-domain.vercel.app/api/webhooks/razorpay` (POST, JSON)
-- [ ] **CSP Allowed Domains**: Update `src/proxy.ts` `Content-Security-Policy` `connect-src`/`frame-src` if using custom domains for Razorpay/fonts
+**Environment Variables** (Vercel Project Settings):
+```
+DATABASE_URL              Neon pooled connection (port 6543)
+DIRECT_URL               Neon direct connection (port 5432) — required for migrations
+NEXTAUTH_SECRET          Strong random string (openssl rand -base64 32)
+NEXTAUTH_URL             Production domain (https://baymaison.in)
+RAZORPAY_KEY_ID          Razorpay live key ID
+RAZORPAY_KEY_SECRET      Razorpay live key secret
+RAZORPAY_WEBHOOK_SECRET  From Razorpay Dashboard → Webhooks
+RESEND_API_KEY           Resend API key
+EMAIL_FROM               noreply@yourdomain.com
+EMAIL_DOMAIN_VERIFIED    true
+RATE_LIMIT_AUTH_MAX      Production rate limit for auth
+RATE_LIMIT_AUTH_WINDOW_MS  Rate limit window in ms
+```
+
+**Build Configuration**:
+- **Build Command**: `bun run build`
+- **Output Directory**: `.next/standalone`
+- **Database Migration**: Run `bun run db:migrate deploy` in CI
+
+**Razorpay Setup**:
+- Webhook URL: `https://your-domain.vercel.app/api/webhooks/razorpay` (POST, JSON)
+- Update CSP in `src/proxy.ts` for Razorpay domains
 
 ### Post-Deploy Verification
 
@@ -145,43 +179,19 @@ bun run lint
 # Health check
 curl https://your-domain.vercel.app/api/health
 
-# Webhook test (from Razorpay dashboard → "Test Webhook")
-# Should return 200 { "received": true }
+# Webhook test (Razorpay Dashboard → "Test Webhook")
+# Should return: 200 { "received": true }
 
-# Auth flow
-# 1. Register → verify session cookie set (httpOnly, secure)
-# 2. Login → JWT in cookie, role in token
-# 3. Access /seller → redirect to /auth/register?role=seller if customer
+# Auth flow verification
+# 1. Register account
+# 2. Verify session cookie set (httpOnly, secure)
+# 3. Login & check JWT in cookie
+# 4. Access /seller dashboard
 ```
 
 ---
 
-## Platform UI & Footer
-
-![BAY Maison Footer - Navigation, Account, Seller Portal](https://images.unsplash.com/image3.jpg?alt=BAY%20Platform%20Footer)
-
-*Seamless navigation across shop, seller portal, and admin dashboard.*
-
----
-
-## AI-Assisted Engineering Workflow
-
-This project was built using **advanced AI-assisted development** as a force-multiplier for a solo engineer:
-
-- **Models**: Z.ai GLM-5.2 (primary reasoning), GPT-4o-class models for code generation
-- **Agent**: Hermes Agent (Nous Research) for pair programming, architecture planning, real-time debugging, security auditing, and skill authoring
-- **Workflow**:
-  - **Architecture Design**: Collaborative system design sessions — database schema, API contracts, settlement engine, multi-seller order splitting
-  - **Implementation**: AI writes ~80% of boilerplate, validation, API routes, middleware, Prisma schema; engineer reviews, refines, and integrates
-  - **Security Auditing**: Systematic review of CSRF, IDOR, timing attacks, webhook idempotency, rate limiting, CSP, HSTS — findings tracked as `SECURITY FIX (C1..C5)` comments in code
-  - **Debugging**: Real-time log analysis, stack trace interpretation, race condition identification (stock decrement), Prisma connection pooling fixes
-  - **Skill Authoring**: Reusable Hermes skills created for recurring patterns (Next.js debugging, Prisma patterns, Razorpay integration, security hardening)
-
-This approach compresses what would typically require a 3–4 person team (backend, frontend, DevOps, security) into a single engineer with AI amplification — without sacrificing code quality, observability, or security posture.
-
----
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
@@ -194,34 +204,84 @@ src/
 │   │   ├── seller/         # Seller portal APIs
 │   │   └── admin/          # Admin APIs
 │   ├── (auth)/             # Login, register pages
-│   ├── (shop)/             # Product listing, detail, cart, checkout
-│   ├── (seller)/           # Seller dashboard
+│   ├── (shop)/             # Product listing, detail, checkout
+│   ├── (seller)/           # Seller dashboard & analytics
 │   └── (admin)/            # Admin panel
+│
 ├── components/
-│   ├── ui/                 # Radix-based primitives
+│   ├── ui/                 # Radix-based accessible primitives
 │   ├── shop/               # Product cards, carousel, filters
-│   ├── checkout/           # Address, payment, summary
+│   ├── checkout/           # Address form, payment, summary
 │   └── seller/             # Seller-specific components
+│
 ├── lib/
-│   ├── auth-config.ts      # NextAuth options (shared)
-│   ├── auth-helpers.ts     # requireAuth, requireRole, requireSeller, requireAdmin
+│   ├── auth-config.ts      # NextAuth configuration
+│   ├── auth-helpers.ts     # requireAuth, requireRole, requireSeller
 │   ├── csrf.ts             # Double-submit CSRF protection
-│   ├── db.ts               # Prisma singleton
-│   ├── rate-limit.ts       # Env-driven, fingerprint-based limiter
+│   ├── db.ts               # Prisma singleton instance
+│   ├── rate-limit.ts       # Fingerprint-based rate limiter
 │   ├── bay/
-│   │   ├── razorpay.ts     # Order create, signature verify, refund
+│   │   ├── razorpay.ts     # Order create, verify, refund
 │   │   ├── settlement.ts   # GST/TCS/commission/payout engine
-│   │   ├── email.ts        # Resend templates
-│   │   ├── data.ts         # Static product/seller data (marketing site)
+│   │   ├── email.ts        # Resend email templates
+│   │   ├── data.ts         # Static product/seller data
 │   │   └── auth-types.ts   # Shared auth types
-│   └── utils.ts            # cn(), formatInr(), etc.
-├── hooks/                  # React hooks (useCart, useAuth, etc.)
+│   └── utils.ts            # cn(), formatInr(), formatDate()
+│
+├── hooks/                  # React hooks (useCart, useAuth, useNotifications)
 ├── proxy.ts                # Edge middleware (auth + security headers)
-└── middleware.ts           # (redirects to proxy.ts in Next.js 16)
+├── middleware.ts           # Next.js middleware (delegates to proxy.ts)
+└── env.ts                  # Type-safe environment variables (Zod)
+
+prisma/
+├── schema.prisma           # Data models & migrations
+└── seed.ts                 # Database seeding script
+
+public/                     # Static assets
 ```
 
 ---
 
-## License
+## 🛡️ Security Highlights
 
-Proprietary — BAY Maison. All rights reserved.
+✅ **CSRF Protection**: Double-submit cookies + SameSite strict
+✅ **Content Security Policy**: Edge-enforced via `src/proxy.ts`
+✅ **HSTS**: 1-year max-age with subdomains
+✅ **Rate Limiting**: Per-endpoint, fingerprint-based client ID
+✅ **Webhook Idempotency**: Event ID deduplication
+✅ **Timing-Safe HMAC**: Razorpay signature verification
+✅ **SQL Injection**: Prisma parameterized queries
+✅ **IDOR Prevention**: Role + ownership checks on all routes
+
+---
+
+## 🤖 AI-Assisted Engineering Workflow
+
+This project was built using **advanced AI-assisted development** as a force-multiplier for a solo engineer:
+
+- **Models**: Z.ai GLM-5.2 (reasoning) + GPT-4o-class (generation)
+- **Agent**: Hermes Agent (Nous Research) for pair programming, debugging, security audits
+- **Approach**:
+  - Architecture design + system planning
+  - AI writes ~80% of boilerplate, validation, APIs, middleware
+  - Engineer reviews, refines, integrates
+  - Systematic security auditing (`SECURITY FIX` comments)
+  - Real-time debugging & race condition identification
+
+**Result**: 3–4 person team (backend, frontend, DevOps, security) compressed into 1 engineer + AI, without sacrificing code quality or observability.
+
+---
+
+## 📄 License
+
+Proprietary — **BAY Maison**. All rights reserved.
+
+---
+
+<div align="center">
+
+### Built with precision. For the discerning few.
+
+![Footer](https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&h=300&fit=crop&q=80)
+
+</div>
