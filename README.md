@@ -259,22 +259,6 @@ WorkflowExecution
 |----------|--------|---------------|---------|
 | `/api/webhooks/razorpay` | POST | HMAC-SHA256 | Payment.captured, payment.failed, refund.processed (triggers Hermes workflows) |
 
----
-
-### Key Implementations
-
-| Security Control | Implementation | File |
-|------------------|----------------|------|
-| **CSRF Protection** | Double-submit token + SameSite=Strict | `src/lib/csrf.ts` |
-| **Rate Limiting** | Per-endpoint fingerprint-based quotas | `src/lib/rate-limit.ts` |
-| **Content Security** | Edge-injected CSP headers | `src/proxy.ts` |
-| **Webhook Verification** | HMAC-SHA256 + event deduplication | `src/lib/bay/razorpay.ts` |
-| **SQL Injection** | Prisma parameterized queries (100%) | `src/lib/db.ts` |
-| **Authorization** | Role + resource ownership checks | `src/lib/auth-helpers.ts` |
-| **Session Management** | JWT in httpOnly cookies | `src/lib/auth-config.ts` |
-| **Workflow Auditing** | Immutable execution logs with idempotency | `src/lib/hermes/audit.ts` |
-
----
 
 ## 📁 Project Structure
 
