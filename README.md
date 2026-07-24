@@ -433,28 +433,6 @@ npm run dev
 bun run dev
 ```
 
-### Environment Variables
-
-```env
-# Database
-DATABASE_URL=postgresql://user:password@host:port/db
-
-# Authentication
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
-
-# Payments
-RAZORPAY_KEY_ID=your-key-id
-RAZORPAY_KEY_SECRET=your-key-secret
-
-# Email
-RESEND_API_KEY=your-resend-key
-
-# Hermes Orchestrator
-HERMES_API_KEY=your-hermes-key
-HERMES_WORKSPACE_ID=your-workspace-id
-```
-
 ---
 
 ## 📄 License
